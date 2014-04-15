@@ -484,7 +484,7 @@ config UCB1400_CORE
 
 config MFD_MSM_RPM
 	tristate "Qualcomm RPM"
-	depends on ARCH_MSM
+	depends on ARCH_QCOM
 	select MFD_CORE
 	help
 	  Select this option to enable the Qualcomm RPM driver.
