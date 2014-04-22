@@ -105,46 +105,14 @@ struct reg_ctrl {
 	u16 reg_data[2];
 };
 
-static int reg_mn_base(struct reg_ctrl *ctrl, unsigned int n)
-{
-	if (n >= 8)
-		return -EINVAL;
-	if (n == 0) {
-		ctrl->reg_adc_ch_sel = REG_M0_ADC_CH_SEL_CTL;
-		ctrl->reg_meas_intv = REG_MEAS_INTERVAL_CTL;
-		ctrl->reg_thres_lo[0] = REG_M0_LOW_THR0;
-		ctrl->reg_thres_lo[1] = REG_M0_LOW_THR1;
-		ctrl->reg_thres_hi[0] = REG_M0_HIGH_THR0;
-		ctrl->reg_thres_hi[1] = REG_M0_HIGH_THR1;
-		ctrl->reg_data[0] = REG_M0_DATA0;
-		ctrl->reg_data[1] = REG_M0_DATA1;
-	} else {
-		u16 base = (n - 1) * REG_MN_SIZE + REG_MN_BASE;
-		u16 dbase = (n - 1) * REG_MN_DATA_SIZE + REG_MN_DATA_BASE;
-		ctrl->reg_adc_ch_sel = base + OFF_MN_ADC_CH_SEL_CTL;
-		ctrl->reg_meas_intv = base + OFF_MN_MEAS_INTERVAL_CTL;
-		ctrl->reg_thres_lo[0] = base + OFF_MN_LOW_THR0;
-		ctrl->reg_thres_lo[1] = base + OFF_MN_LOW_THR1;
-		ctrl->reg_thres_hi[0] = base + OFF_MN_HIGH_THR0;
-		ctrl->reg_thres_hi[1] = base + OFF_MN_HIGH_THR1;
-		ctrl->reg_data[0] = dbase + OFF_MN_DATA0;
-		ctrl->reg_data[1] = dbase + OFF_MN_DATA1;
-	}
-	return 0;
-}
-
 static const struct iio_event_spec pm8x41_adc_events[] = {
 	{
 		.type = IIO_EV_TYPE_THRESH,
 		.dir = IIO_EV_DIR_RISING,
-		.mask_shared_by_all = BIT(IIO_EV_INFO_VALUE) |
-				BIT(IIO_EV_INFO_ENABLE),
 	},
 	{
 		.type = IIO_EV_TYPE_THRESH,
 		.dir = IIO_EV_DIR_FALLING,
-		.mask_shared_by_all = BIT(IIO_EV_INFO_VALUE) |
-				BIT(IIO_EV_INFO_ENABLE),
 	},
 };
 
@@ -604,10 +572,10 @@ static int pm8x41_iadc_init(struct pm8x41_adc *adc)
 
 static const struct iio_info pm8x41_adc_iio_info = {
 	.read_raw = &pm8x41_adc_read_raw,
-	.read_event_config_new = &pm8x41_adc_read_event_config,
-	.write_event_config_new = &pm8x41_adc_write_event_config,
-	.read_event_value_new = &pm8x41_adc_read_event_value,
-	.write_event_value_new = &pm8x41_adc_write_event_value,
+	.read_event_config = &pm8x41_adc_read_event_config,
+	.write_event_config = &pm8x41_adc_write_event_config,
+	.read_event_value = &pm8x41_adc_read_event_value,
+	.write_event_value = &pm8x41_adc_write_event_value,
 	.driver_module = THIS_MODULE,
 };
 
