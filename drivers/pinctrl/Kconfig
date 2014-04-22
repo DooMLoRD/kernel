@@ -59,6 +59,14 @@ config PINCTRL_ADI2
 	  future processors. This option is selected automatically when specific
 	  machine and arch are selected to build.
 
+config PINCTRL_APQ8064
+	tristate "Qualcomm APQ8064 pin controller driver"
+	depends on GPIOLIB && OF && OF_IRQ
+	select PINCTRL_MSM
+	help
+	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+	  Qualcomm TLMM block found in the Qualcomm APQ8064 platform.
+
 config PINCTRL_AS3722
 	bool "Pinctrl and GPIO driver for ams AS3722 PMIC"
 	depends on MFD_AS3722 && GPIOLIB
@@ -221,6 +229,10 @@ config PINCTRL_MSM
 	select PINMUX
 	select PINCONF
 	select GENERIC_PINCONF
+
+config PINCTRL_MSM8960
+	bool "Qualcomm 8960 pin controller driver"
+	select PINCTRL_MSM
 
 config PINCTRL_MSM8X74
 	tristate "Qualcomm 8x74 pin controller driver"
