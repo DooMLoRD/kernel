@@ -57,6 +57,11 @@
 		      <0xfc4cb000 0x1000>,
 		      <0xfc4ca000 0x1000>;
 		interrupts = <0 190 0>;
+		interrupt-names = "periph_irq";
+
+		qcom,channel = <0>;
+		qcom,ee = <0>;
+
 		#address-cells = <2>;
 		#size-cells = <0>;
 
