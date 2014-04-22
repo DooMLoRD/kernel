@@ -36,7 +36,7 @@ static int pm8x41_probe(struct spmi_device *sdev)
 {
 	struct regmap *regmap;
 
-	regmap = devm_regmap_init_spmi_base(sdev, &pm8x41_regmap_config);
+	regmap = devm_regmap_init_spmi_ext(sdev, &pm8x41_regmap_config);
 	if (IS_ERR(regmap)) {
 		dev_dbg(&sdev->dev, "regmap creation failed.\n");
 		return PTR_ERR(regmap);
